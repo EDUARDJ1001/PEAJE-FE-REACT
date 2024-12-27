@@ -75,39 +75,42 @@ const ReportView: React.FC = () => {
     }, [apiHost]);
 
     const generatePDF = () => {
-        const content = document.getElementById("report-content");
+        if (typeof window !== "undefined") {
+            const content = document.getElementById("report-content");
 
-        if (content) {
-            const selectElements = content.querySelectorAll("select");
-            selectElements.forEach((select) => {
-                const selectedOption = select.options[select.selectedIndex];
-                const span = document.createElement("span");
-                span.textContent = selectedOption ? selectedOption.text : "";
-                select.parentNode?.replaceChild(span, select);
+            if (content) {
+                const selectElements = content.querySelectorAll("select");
+                selectElements.forEach((select) => {
+                    const selectedOption = select.options[select.selectedIndex];
+                    const span = document.createElement("span");
+                    span.textContent = selectedOption ? selectedOption.text : "";
+                    select.parentNode?.replaceChild(span, select);
+                });
+            }
+
+            const fechaActual = new Date().toLocaleDateString("es-HN", {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
             });
-        }
 
-        const fechaActual = new Date().toLocaleDateString("es-HN", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-        });
+            const nombreArchivo = `reporte cierre de boleteria ${fechaActual}.pdf`;
 
-        const nombreArchivo = `reporte cierre de boleteria ${fechaActual}.pdf`;
+            const options = {
+                filename: nombreArchivo,
+                margin: [10, 10, 10, 10],
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+            };
 
-        const options = {
-            filename: nombreArchivo,
-            margin: [10, 10, 10, 10],
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        };
-
-        if (content) {
-            html2pdf().set(options).from(content).save();
+            if (content) {
+                html2pdf().set(options).from(content).save();
+            }
         }
     };
+
 
     return (
         <div>
