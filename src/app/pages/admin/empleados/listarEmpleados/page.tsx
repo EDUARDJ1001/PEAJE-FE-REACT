@@ -2,7 +2,6 @@
 
 import HeaderAdmin from "@/app/components/headerAdmin";
 import Pagination from "@/app/components/pagination";
-import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface Empleado {
@@ -67,7 +66,6 @@ const ListaEmpleados: React.FC = () => {
 
     const handleEditar = (id: number) => {
         console.log("Editar empleado con ID:", id);
-        redirect(`/pages/admin/empleados/editarEmpleados/?id=${id}`);
     };
 
     const handleEliminar = async (id: number) => {
