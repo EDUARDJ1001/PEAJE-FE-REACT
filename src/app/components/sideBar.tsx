@@ -126,7 +126,7 @@ const SidebarAdmin = () => {
                     className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap"
                 >
                     <a
-                        href="/pages/admin/tickets"
+                        href="/pages/admin/select"
                         className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-cyan-100 hover:shadow-inner focus:bg-gradient-to-r from-cyan-400 to-cyan-600 focus:text-white text-gray-700 transition-all ease-linear"
                     >
                         <svg

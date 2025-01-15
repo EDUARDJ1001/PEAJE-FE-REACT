@@ -4,6 +4,12 @@ import HeaderAdmin from "@/app/components/headerAdmin";
 import React, { useState, useEffect } from "react";
 import html2pdf from "html2pdf.js";
 
+interface User {
+    nombre: string;
+    apellido: string;
+    loginTime: string;
+}
+
 interface ConteoBoleto {
     Descripcion: string;
     Valor: number;
@@ -17,8 +23,8 @@ interface Billete {
     cantidad: number;
 }
 
-const ReportView: React.FC = () => {
-    const apiHost = process.env.NEXT_PUBLIC_API_HOST || "";
+const ReportVia1: React.FC = () => {
+    const [userData, setUserData] = useState<User | null>(null);
     const [conteoBoletos, setConteoBoletos] = useState<ConteoBoleto[]>([]);
     const [billetes, setBilletes] = useState<Billete[]>([
         { denominacion: "1 lempira", valor: 1, cantidad: 0 },
@@ -64,6 +70,7 @@ const ReportView: React.FC = () => {
             [name]: value,
         }));
     };
+    const apiHost = process.env.NEXT_PUBLIC_API_HOST || "";
 
     useEffect(() => {
         fetch(`${apiHost}/api/conteo-boletos`)
@@ -72,6 +79,15 @@ const ReportView: React.FC = () => {
                 setConteoBoletos(data);
             })
             .catch((err) => console.error("Error al cargar conteo de boletos:", err));
+
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            setUserData({
+                ...parsedUser,
+                loginTime: new Date(parsedUser.loginTime).toLocaleString(),
+            });
+        }
     }, [apiHost]);
 
     const generatePDF = () => {
@@ -138,29 +154,12 @@ const ReportView: React.FC = () => {
                             <p className="text-lg">Fecha: {new Date().toLocaleDateString()}</p>
                             <div className="flex justify-between mt-2">
                                 <div>
-                                    <label>Via #:</label>
-                                    <select
-                                        name="via"
-                                        value={formData.via}
-                                        onChange={handleFormChange}
-                                        className="ml-2 p-2 border rounded-md"
-                                    >
-                                        {[1, 2, 3, 4].map((via) => (
-                                            <option key={via} value={via}>
-                                                {via}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <p>Via #1</p>
                                 </div>
                                 <div>
-                                    <label>Operador:</label>
-                                    <input
-                                        name="operador"
-                                        type="text"
-                                        value={formData.operador}
-                                        onChange={handleFormChange}
-                                        className="ml-2 p-2 border rounded-md"
-                                    />
+                                    <p>
+                                        Operador: {userData?.nombre} {userData?.apellido}
+                                    </p>
                                 </div>
                                 <div>
                                     <label>Turno:</label>
@@ -180,19 +179,7 @@ const ReportView: React.FC = () => {
                             </div>
                             <div className="flex justify-between mt-2">
                                 <div>
-                                    <label>Apertura:</label>
-                                    <select
-                                        name="apertura"
-                                        value={formData.apertura}
-                                        onChange={handleFormChange}
-                                        className="ml-2 p-2 border rounded-md"
-                                    >
-                                        {["6:00 am", "2:00 pm", "10:00 pm"].map((hora) => (
-                                            <option key={hora} value={hora}>
-                                                {hora}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <p>Apertura: {userData?.loginTime}</p>
                                 </div>
                                 <div>
                                     <label>Cierre:</label>
@@ -349,4 +336,4 @@ const ReportView: React.FC = () => {
     );
 };
 
-export default ReportView;
+export default ReportVia1;
