@@ -73,7 +73,7 @@ const ReportVia1: React.FC = () => {
     const apiHost = process.env.NEXT_PUBLIC_API_HOST || "";
 
     useEffect(() => {
-        fetch(`${apiHost}/api/conteo-boletos`)
+        fetch(`${apiHost}/api/conteo-boletos-v3`)
             .then((res) => res.json())
             .then((data) => setConteoBoletos(data))
             .catch((err) => console.error("Error al cargar conteo de boletos:", err));
