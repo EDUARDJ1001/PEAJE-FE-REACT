@@ -23,7 +23,7 @@ interface Billete {
     cantidad: number;
 }
 
-const ReportVia2: React.FC = () => {
+const ReportVia1: React.FC = () => {
     const [userData, setUserData] = useState<User | null>(null);
     const [conteoBoletos, setConteoBoletos] = useState<ConteoBoleto[]>([]);
     const [billetes, setBilletes] = useState<Billete[]>([
@@ -73,11 +73,9 @@ const ReportVia2: React.FC = () => {
     const apiHost = process.env.NEXT_PUBLIC_API_HOST || "";
 
     useEffect(() => {
-        fetch(`${apiHost}/api/conteo-boletos-v2`)
+        fetch(`${apiHost}/api/conteo-boletos`)
             .then((res) => res.json())
-            .then((data) => {
-                setConteoBoletos(data);
-            })
+            .then((data) => setConteoBoletos(data))
             .catch((err) => console.error("Error al cargar conteo de boletos:", err));
 
         const storedUser = localStorage.getItem("user");
@@ -90,7 +88,24 @@ const ReportVia2: React.FC = () => {
         }
     }, [apiHost]);
 
-    const generatePDF = () => {
+    const limpiarConteoBoletos = async () => {
+        try {
+            const response = await fetch(`${apiHost}/api/conteo-boletos-v2/limpiar-conteo-boletos`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al limpiar la tabla Conteo_Boletos");
+            }
+
+            console.log("Tabla Conteo_Boletos limpiada exitosamente.");
+        } catch (error) {
+            console.error("Error al limpiar la tabla Conteo_Boletos:", error);
+        }
+    };
+
+    const generatePDF = async () => {
         if (typeof window !== "undefined") {
             const content = document.getElementById("report-content");
 
@@ -122,10 +137,12 @@ const ReportVia2: React.FC = () => {
             };
 
             if (content) {
-                html2pdf().set(options).from(content).save();
+                await html2pdf().set(options).from(content).save();
+                await limpiarConteoBoletos();
             }
         }
     };
+
 
 
     return (
@@ -154,7 +171,7 @@ const ReportVia2: React.FC = () => {
                             <p className="text-lg">Fecha: {new Date().toLocaleDateString()}</p>
                             <div className="flex justify-between mt-2">
                                 <div>
-                                    <p>Via #2</p>
+                                    <p>Via #1</p>
                                 </div>
                                 <div>
                                     <p>
@@ -336,4 +353,4 @@ const ReportVia2: React.FC = () => {
     );
 };
 
-export default ReportVia2;
+export default ReportVia1;

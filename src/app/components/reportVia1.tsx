@@ -75,9 +75,7 @@ const ReportVia1: React.FC = () => {
     useEffect(() => {
         fetch(`${apiHost}/api/conteo-boletos`)
             .then((res) => res.json())
-            .then((data) => {
-                setConteoBoletos(data);
-            })
+            .then((data) => setConteoBoletos(data))
             .catch((err) => console.error("Error al cargar conteo de boletos:", err));
 
         const storedUser = localStorage.getItem("user");
@@ -90,7 +88,24 @@ const ReportVia1: React.FC = () => {
         }
     }, [apiHost]);
 
-    const generatePDF = () => {
+    const limpiarConteoBoletos = async () => {
+        try {
+            const response = await fetch(`${apiHost}/api/conteo-boletos/limpiar-conteo-boletos`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al limpiar la tabla Conteo_Boletos");
+            }
+
+            console.log("Tabla Conteo_Boletos limpiada exitosamente.");
+        } catch (error) {
+            console.error("Error al limpiar la tabla Conteo_Boletos:", error);
+        }
+    };
+
+    const generatePDF = async () => {
         if (typeof window !== "undefined") {
             const content = document.getElementById("report-content");
 
@@ -122,10 +137,12 @@ const ReportVia1: React.FC = () => {
             };
 
             if (content) {
-                html2pdf().set(options).from(content).save();
+                await html2pdf().set(options).from(content).save();
+                await limpiarConteoBoletos();
             }
         }
     };
+
 
 
     return (

@@ -33,7 +33,6 @@ const Login: React.FC = () => {
                 throw new Error(data.message || 'Error al iniciar sesión');
             }
 
-            // Asignar el usuario y almacenar en localStorage
             setUser(data.user);
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify({

@@ -14,7 +14,7 @@ interface Boleto {
   Valor: number;
 }
 
-const TicketsAdmin: React.FC = () => {
+const TicketsAdminV3: React.FC = () => {
   const [buttonData, setButtonData] = useState<Boleto[]>([]);
   const [userData, setUserData] = useState<User | null>(null);
   const [ticketCounter, setTicketCounter] = useState(1);
@@ -30,24 +30,7 @@ const TicketsAdmin: React.FC = () => {
   ];
 
   useEffect(() => {
-    const limpiarConteoBoletos = async () => {
-      try {
-        const response = await fetch(`${apiHost}/api/conteo-boletos/limpiar-conteo-boletos`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (!response.ok) {
-          throw new Error('Error al limpiar la tabla Conteo_Boletos');
-        }
-
-        console.log('Tabla Conteo_Boletos limpiada exitosamente.');
-      } catch (error) {
-        console.error('Error al limpiar la tabla Conteo_Boletos:', error);
-      }
-    };
-    limpiarConteoBoletos();
-
+    
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
@@ -89,7 +72,7 @@ const TicketsAdmin: React.FC = () => {
 
   const actualizarConteoBoletos = async (boleto: Boleto) => {
     try {
-      const response = await fetch(`${apiHost}/api/conteo-boletos`, {
+      const response = await fetch(`${apiHost}/api/conteo-boletos-v3`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -130,7 +113,7 @@ const TicketsAdmin: React.FC = () => {
               <h1>Municipalidad de Puerto Cortés</h1>
               <h2>RTN 03019000044953</h2>
               <p>Estación: PUERTO CORTÉS</p>
-              <p>Ticket No. ${ticketNumber}</p>
+              <p>Ticket No. V3${ticketNumber}</p>
               <p>Fecha: ${new Date().toLocaleString()}</p>
               <p>Vehículo: ${boleto.Descripcion}</p>
               <p>-------------------------</p>
@@ -200,4 +183,4 @@ const TicketsAdmin: React.FC = () => {
   );
 };
 
-export default TicketsAdmin;
+export default TicketsAdminV3;

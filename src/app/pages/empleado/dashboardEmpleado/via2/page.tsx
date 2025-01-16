@@ -123,7 +123,8 @@ const TicketsEmpleadosV2: React.FC = () => {
               <h1>Municipalidad de Puerto Cortés</h1>
               <h2>RTN 03019000044953</h2>
               <p>Estación: PUERTO CORTÉS</p>
-              <p>Ticket No. ${ticketNumber}</p>
+              <p>Ticket No.V2${ticketNumber}</p>
+              <p>Operador: ${userData?.nombre}</p>
               <p>Fecha: ${new Date().toLocaleString()}</p>
               <p>Vehículo: ${boleto.Descripcion}</p>
               <p>-------------------------</p>
