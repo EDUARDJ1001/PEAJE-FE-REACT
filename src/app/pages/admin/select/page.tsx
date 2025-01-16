@@ -43,25 +43,25 @@ const Select: React.FC = () => {
                     </div>
                     <div className="flex flex-wrap gap-4">
                         <a
-                            href="/pages/admin/tickets"
+                            href="/pages/admin/tickets/via1"
                             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
                         >
                             Via 1
                         </a>
                         <a
-                            href="/pages/admin/tickets"
+                            href="/pages/admin/tickets/via2"
                             className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
                         >
                             Via 2
                         </a>
                         <a
-                            href="/pages/admin/tickets"
+                            href="/pages/admin/tickets/via3"
                             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
                         >
                             Via 3
                         </a>
                         <a
-                            href="/pages/admin/tickets"
+                            href="/pages/admin/tickets/via4"
                             className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
                         >
                             Via 4
