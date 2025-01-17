@@ -30,7 +30,6 @@ const TicketsAdminV1: React.FC = () => {
   ];
 
   useEffect(() => {
-    
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
