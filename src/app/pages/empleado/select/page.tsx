@@ -7,6 +7,7 @@ interface User {
     nombre: string;
     apellido: string;
     loginTime: string;
+    selectedVia?: string;
 }
 
 const Select: React.FC = () => {
@@ -14,7 +15,6 @@ const Select: React.FC = () => {
     const [userData, setUserData] = useState<User | null>(null);
 
     useEffect(() => {
-
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
@@ -23,9 +23,17 @@ const Select: React.FC = () => {
                 loginTime: new Date(parsedUser.loginTime).toLocaleString(),
             });
         }
-
     }, [apiHost]);
 
+    const handleViaSelection = (via: string) => {
+        if (userData) {
+            const updatedUser = { ...userData, selectedVia: via };
+
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+
+            window.location.href = `/pages/empleado/dashboardEmpleado/${via}`;
+        }
+    };
 
     return (
         <div>
@@ -39,32 +47,32 @@ const Select: React.FC = () => {
                         <p>Sesión iniciada: {userData?.loginTime}</p>
                     </div>
                     <div>
-                        <h2>Seleccione una via</h2>
+                        <h2>Seleccione una vía</h2>
                     </div>
                     <div className="flex flex-wrap gap-4">
                         <a
-                            href="/pages/empleado/dashboardEmpleado/via1"
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+                            onClick={() => handleViaSelection('via1')}
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                         >
-                            Via 1
+                            Vía 1
                         </a>
                         <a
-                            href="/pages/empleado/dashboardEmpleado/via2"
-                            className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+                            onClick={() => handleViaSelection('via2')}
+                            className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                         >
-                            Via 2
+                            Vía 2
                         </a>
                         <a
-                            href="/pages/empleado/dashboardEmpleado/via3"
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+                            onClick={() => handleViaSelection('via3')}
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                         >
-                            Via 3
+                            Vía 3
                         </a>
                         <a
-                            href="/pages/empleado/dashboardEmpleado/via4"
-                            className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+                            onClick={() => handleViaSelection('via4')}
+                            className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                         >
-                            Via 4
+                            Vía 4
                         </a>
                     </div>
                 </div>
