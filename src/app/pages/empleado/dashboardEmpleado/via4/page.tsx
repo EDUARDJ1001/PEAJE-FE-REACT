@@ -65,12 +65,12 @@ const TicketsEmpleadosV4: React.FC = () => {
         const handlePopState = (event: PopStateEvent) => {
             const confirmation = window.confirm("¿Estás seguro de que quieres salir?");
             if (!confirmation) {
-                window.history.pushState(null, "", window.location.href); 
+                window.history.pushState(null, "", window.location.href);
             }
         };
 
         window.addEventListener("beforeunload", handleBeforeUnload);
-        window.addEventListener("popstate", handlePopState); 
+        window.addEventListener("popstate", handlePopState);
 
         window.history.pushState(null, "", window.location.href);
 
@@ -80,8 +80,35 @@ const TicketsEmpleadosV4: React.FC = () => {
         };
     }, [apiHost]);
 
+    const obtenerUltimoId = async () => {
+        try {
+            const response = await fetch(`${apiHost}/api/contador-v4/ultimo-id`);
+            if (!response.ok) {
+                throw new Error("Error al obtener el último ID");
+            }
+            const data = await response.json();
+            return data.id;
+        } catch (error) {
+            console.error("Error al obtener el último ID:", error);
+            return null;
+        }
+    };
+
     const actualizarConteoBoletos = async (boleto: Boleto) => {
         try {
+            const insertarResponse = await fetch(`${apiHost}/api/contador-v4/insert`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!insertarResponse.ok) {
+                throw new Error("Error al insertar nuevo ID");
+            }
+
+            console.log("Nuevo ID insertado con éxito");
+
             const response = await fetch(`${apiHost}/api/conteo-boletos-v4`, {
                 method: "POST",
                 headers: {
@@ -102,8 +129,14 @@ const TicketsEmpleadosV4: React.FC = () => {
         }
     };
 
-    const imprimirTicket = (boleto: Boleto) => {
-        const ticketNumber = ticketCounter.toString().padStart(10, "0");
+    const imprimirTicket = async (boleto: Boleto) => {
+        const ultimoId = await obtenerUltimoId();
+        if (ultimoId === null) {
+            console.error("No se pudo obtener el último ID");
+            return;
+        }
+
+        const ticketNumber = ultimoId.toString().padStart(10, "0");
 
         const ticketContent = `
       <html>
@@ -141,7 +174,6 @@ const TicketsEmpleadosV4: React.FC = () => {
             printWindow.document.close();
             printWindow.print();
             setTimeout(() => printWindow.close(), 10000);
-            setTicketCounter((prevCounter) => prevCounter + 1);
             actualizarConteoBoletos(boleto);
         }
     };
@@ -156,6 +188,7 @@ const TicketsEmpleadosV4: React.FC = () => {
                             Bienvenido, <strong>{userData.nombre} {userData.apellido}</strong>
                         </p>
                         <p>Sesión iniciada: {userData.loginTime}</p>
+                        <p>Via #4</p>
                     </div>
                 ) : (
                     <p className="text-gray-500">Cargando información del usuario...</p>

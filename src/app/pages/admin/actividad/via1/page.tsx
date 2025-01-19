@@ -34,14 +34,20 @@ const ActividadVia1: React.FC = () => {
             })
             .catch((err) => console.error("Error al cargar conteo de boletos:", err));
 
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            const parsedUser = JSON.parse(storedUser);
-            setUserData({
-                ...parsedUser,
-                loginTime: new Date(parsedUser.loginTime).toLocaleString(),
-            });
-        }
+        fetch(`${apiHost}/api/userRoutes/user-data`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+            .then((res) => res.json())
+            .then((user) => {
+                setUserData({
+                    ...user,
+                    loginTime: new Date(user.loginTime).toLocaleString(),
+                });
+            })
+            .catch((err) => console.error("Error al cargar datos del usuario:", err));
     }, [apiHost]);
 
     return (

@@ -12,7 +12,7 @@ const Login: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [user, setUser] = useState<User | null>(null); 
+    const [user, setUser] = useState<User | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -34,6 +34,7 @@ const Login: React.FC = () => {
             }
 
             setUser(data.user);
+            
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify({
                 ...data.user,
