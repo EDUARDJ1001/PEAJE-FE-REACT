@@ -41,7 +41,6 @@ const Login: React.FC = () => {
                 loginTime: new Date().toISOString(),
             }));
 
-            // Redirigir al dashboard
             window.location.href = data.dashboardRoute;
         } catch (err) {
             if (err instanceof Error) {

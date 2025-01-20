@@ -34,27 +34,21 @@ const ActividadVia1: React.FC = () => {
             })
             .catch((err) => console.error("Error al cargar conteo de boletos:", err));
 
-        fetch(`${apiHost}/api/userRoutes/user-data`, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-            .then((res) => res.json())
-            .then((user) => {
-                setUserData({
-                    ...user,
-                    loginTime: new Date(user.loginTime).toLocaleString(),
-                });
-            })
-            .catch((err) => console.error("Error al cargar datos del usuario:", err));
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            setUserData({
+                ...parsedUser,
+                loginTime: new Date(parsedUser.loginTime).toLocaleString(),
+            });
+        }
     }, [apiHost]);
 
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col">
             <HeaderAdmin />
             <div className="flex flex-1">
-                <SidebarAdmin />
+                <SidebarAdmin/>
                 <div className="container mx-auto p-6">
                     <h1 className="text-3xl font-bold text-gray-800 mb-4">Actividad de Via #1</h1>
                     <div className="p-6 space-y-8">
