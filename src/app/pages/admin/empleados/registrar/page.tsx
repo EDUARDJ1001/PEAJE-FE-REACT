@@ -1,6 +1,7 @@
 "use client";
 
 import HeaderAdmin from "@/app/components/headerAdmin";
+import SidebarAdmin from "@/app/components/sideBar";
 import React, { useEffect, useState } from "react";
 
 const RegistrarEmpleado: React.FC = () => {
@@ -89,100 +90,103 @@ const RegistrarEmpleado: React.FC = () => {
     return (
         <div className="bg-gray-100 min-h-screen">
             <HeaderAdmin />
-            <div className="container mx-auto p-6">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">Registrar Nuevo Empleado</h1>
+            <div className="flex flex-1">
+                <SidebarAdmin />
+                <div className="container mx-auto p-6">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-6">Registrar Nuevo Empleado</h1>
 
-                <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md space-y-4">
-                    <div className="mb-4">
-                        <input
-                            name="nombre"
-                            placeholder="Nombre"
-                            value={formData.nombre}
-                            onChange={handleChange}
-                            className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <input
-                            name="apellido"
-                            placeholder="Apellido"
-                            value={formData.apellido}
-                            onChange={handleChange}
-                            className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <input
-                            name="identidad"
-                            placeholder="Identidad"
-                            value={formData.identidad}
-                            onChange={handleChange}
-                            className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <select
-                            name="cargoId"
-                            value={formData.cargoId}
-                            onChange={handleChange}
-                            className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-                            required
+                    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md space-y-4">
+                        <div className="mb-4">
+                            <input
+                                name="nombre"
+                                placeholder="Nombre"
+                                value={formData.nombre}
+                                onChange={handleChange}
+                                className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <input
+                                name="apellido"
+                                placeholder="Apellido"
+                                value={formData.apellido}
+                                onChange={handleChange}
+                                className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <input
+                                name="identidad"
+                                placeholder="Identidad"
+                                value={formData.identidad}
+                                onChange={handleChange}
+                                className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <select
+                                name="cargoId"
+                                value={formData.cargoId}
+                                onChange={handleChange}
+                                className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                                required
+                            >
+                                <option value="">Seleccionar Cargo</option>
+                                {cargos.map((cargo) => (
+                                    <option key={cargo.Id} value={cargo.Id}>
+                                        {cargo.Descripcion}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="mb-4">
+                            <select
+                                name="generoId"
+                                value={formData.generoId}
+                                onChange={handleChange}
+                                className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                                required
+                            >
+                                <option value="">Seleccionar Género</option>
+                                {generos.map((genero) => (
+                                    <option key={genero.Id} value={genero.Id}>
+                                        {genero.Descripcion}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="mb-4">
+                            <input
+                                name="username"
+                                placeholder="Nombre de usuario"
+                                value={formData.username}
+                                onChange={handleChange}
+                                className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Contraseña"
+                                value={formData.password}
+                                onChange={handleChange}
+                                className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                                required
+                            />
+                        </div>
+                        <button
+                            className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+                            type="submit"
                         >
-                            <option value="">Seleccionar Cargo</option>
-                            {cargos.map((cargo) => (
-                                <option key={cargo.Id} value={cargo.Id}>
-                                    {cargo.Descripcion}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="mb-4">
-                        <select
-                            name="generoId"
-                            value={formData.generoId}
-                            onChange={handleChange}
-                            className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-                            required
-                        >
-                            <option value="">Seleccionar Género</option>
-                            {generos.map((genero) => (
-                                <option key={genero.Id} value={genero.Id}>
-                                    {genero.Descripcion}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="mb-4">
-                        <input
-                            name="username"
-                            placeholder="Nombre de usuario"
-                            value={formData.username}
-                            onChange={handleChange}
-                            className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Contraseña"
-                            value={formData.password}
-                            onChange={handleChange}
-                            className="border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-                            required
-                        />
-                    </div>
-                    <button
-                        className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
-                        type="submit"
-                    >
-                        Registrar Empleado
-                    </button>
-                </form>
+                            Registrar Empleado
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     );

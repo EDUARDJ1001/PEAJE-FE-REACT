@@ -2,6 +2,7 @@
 
 import HeaderAdmin from "@/app/components/headerAdmin";
 import Pagination from "@/app/components/pagination";
+import SidebarAdmin from "@/app/components/sideBar";
 import React, { useEffect, useState } from "react";
 
 interface Empleado {
@@ -24,6 +25,17 @@ const ListaEmpleados: React.FC = () => {
     const [empleados, setEmpleados] = useState<Empleado[]>([]);
     const [cargos, setCargos] = useState<{ [key: string]: string }>({});
     const [generos, setGeneros] = useState<{ [key: string]: string }>({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [empleadoData, setEmpleadoData] = useState<Empleado | null>(null);
+    const [formData, setFormData] = useState({
+        nombre: "",
+        apellido: "",
+        identidad: "",
+        cargoId: "",
+        generoId: "",
+        username: "",
+        password: "",
+    });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
@@ -62,10 +74,28 @@ const ListaEmpleados: React.FC = () => {
 
         fetchEmpleados();
         fetchOpciones();
-    },[]);
+    }, []);
+
+    useEffect(() => {
+        if (empleadoData) {
+            setFormData({
+                nombre: empleadoData.Nombre,
+                apellido: empleadoData.Apellido,
+                identidad: empleadoData.Identidad,
+                cargoId: empleadoData.Cargo_Id,
+                generoId: empleadoData.Genero_Id,
+                username: empleadoData.Username,
+                password: "",
+            });
+        }
+    }, [empleadoData]);
 
     const handleEditar = (id: number) => {
-        console.log("Editar empleado con ID:", id);
+        const empleado = empleados.find((emp) => emp.Id === id);
+        if (empleado) {
+            setEmpleadoData(empleado);
+            setIsModalOpen(true);
+        }
     };
 
     const handleEliminar = async (id: number) => {
@@ -83,6 +113,37 @@ const ListaEmpleados: React.FC = () => {
         }
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleSave = async () => {
+        if (empleadoData) {
+            try {
+                const response = await fetch(`${apiHost}/api/empleados/${empleadoData.Id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+                if (response.ok) {
+                    alert('Empleado actualizado con éxito');
+                    setIsModalOpen(false);
+                } else {
+                    alert('Error al actualizar el empleado');
+                }
+            } catch (error) {
+                console.error("Error al actualizar el empleado:", error);
+                alert("Hubo un problema al actualizar el empleado");
+            }
+        }
+    };
+
     const indexOfLastEmployee = currentPage * itemsPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - itemsPerPage;
     const currentEmployees = empleados.slice(indexOfFirstEmployee, indexOfLastEmployee);
@@ -94,58 +155,165 @@ const ListaEmpleados: React.FC = () => {
     return (
         <div className="bg-gray-100 min-h-screen">
             <HeaderAdmin />
-            <div className="container mx-auto p-6">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">Lista de Empleados</h1>
-                <div className="overflow-x-auto bg-white p-6 rounded-lg shadow-md">
-                    <table className="table-auto w-full border-collapse border border-gray-200">
-                        <thead className="bg-gray-800">
-                            <tr>
-                                <th className="px-4 py-2 text-white">Nombre</th>
-                                <th className="px-4 py-2 text-white">Apellido</th>
-                                <th className="px-4 py-2 text-white">Identidad</th>
-                                <th className="px-4 py-2 text-white">Cargo</th>
-                                <th className="px-4 py-2 text-white">Género</th>
-                                <th className="px-4 py-2 text-white">Usuario</th>
-                                <th className="px-4 py-2 text-white">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentEmployees.map((empleado) => (
-                                <tr key={empleado.Id} className="hover:bg-gray-100">
-                                    <td className="px-4 py-2 text-black">{empleado.Nombre}</td>
-                                    <td className="px-4 py-2 text-black">{empleado.Apellido}</td>
-                                    <td className="px-4 py-2 text-black">{empleado.Identidad}</td>
-                                    <td className="px-4 py-2 text-black">{cargos[empleado.Cargo_Id] || "Desconocido"}</td>
-                                    <td className="px-4 py-2 text-black">{generos[empleado.Genero_Id] || "Desconocido"}</td>
-                                    <td className="px-4 py-2 text-black">{empleado.Username}</td>
-                                    <td className="px-4 py-2">
-                                        <button
-                                            onClick={() => handleEditar(empleado.Id)}
-                                            className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded"
-                                        >
-                                            Editar
-                                        </button>
-                                        <button
-                                            onClick={() => handleEliminar(empleado.Id)}
-                                            className="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded"
-                                        >
-                                            Eliminar
-                                        </button>
-                                    </td>
+            <div className="flex flex-1">
+                <SidebarAdmin />
+                <div className="container mx-auto p-6">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-6">Lista de Empleados</h1>
+                    <div className="overflow-x-auto bg-white p-6 rounded-lg shadow-md">
+                        <table className="table-auto w-full border-collapse border border-gray-200">
+                            <thead className="bg-gray-800">
+                                <tr>
+                                    <th className="px-4 py-2 text-white">Nombre</th>
+                                    <th className="px-4 py-2 text-white">Apellido</th>
+                                    <th className="px-4 py-2 text-white">Identidad</th>
+                                    <th className="px-4 py-2 text-white">Cargo</th>
+                                    <th className="px-4 py-2 text-white">Género</th>
+                                    <th className="px-4 py-2 text-white">Usuario</th>
+                                    <th className="px-4 py-2 text-white">Acciones</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-                <div className="flex justify-center mt-4">
-                    <Pagination
-                        currentPage={currentPage}
-                        totalItems={empleados.length}
-                        itemsPerPage={itemsPerPage}
-                        onPageChange={handlePageChange}
-                    />
+                            </thead>
+                            <tbody>
+                                {currentEmployees.map((empleado) => (
+                                    <tr key={empleado.Id} className="hover:bg-gray-100">
+                                        <td className="px-4 py-2 text-black">{empleado.Nombre}</td>
+                                        <td className="px-4 py-2 text-black">{empleado.Apellido}</td>
+                                        <td className="px-4 py-2 text-black">{empleado.Identidad}</td>
+                                        <td className="px-4 py-2 text-black">{cargos[empleado.Cargo_Id] || "Desconocido"}</td>
+                                        <td className="px-4 py-2 text-black">{generos[empleado.Genero_Id] || "Desconocido"}</td>
+                                        <td className="px-4 py-2 text-black">{empleado.Username}</td>
+                                        <td className="px-4 py-2">
+                                            <button
+                                                onClick={() => handleEditar(empleado.Id)}
+                                                className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded"
+                                            >
+                                                Editar
+                                            </button>
+                                            <button
+                                                onClick={() => handleEliminar(empleado.Id)}
+                                                className="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded"
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="flex justify-center mt-4">
+                        <Pagination
+                            currentPage={currentPage}
+                            totalItems={empleados.length}
+                            itemsPerPage={itemsPerPage}
+                            onPageChange={handlePageChange}
+                        />
+                    </div>
                 </div>
             </div>
+
+            {isModalOpen && empleadoData && (
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                        <h2 className="text-xl font-bold mb-4">Editar Empleado</h2>
+                        <div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">Nombre</label>
+                                <input
+                                    type="text"
+                                    name="nombre"
+                                    value={formData.nombre}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">Apellido</label>
+                                <input
+                                    type="text"
+                                    name="apellido"
+                                    value={formData.apellido}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">Identidad</label>
+                                <input
+                                    type="text"
+                                    name="identidad"
+                                    value={formData.identidad}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">Cargo</label>
+                                <select
+                                    name="cargoId"
+                                    value={formData.cargoId}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                                >
+                                    {Object.entries(cargos).map(([key, value]) => (
+                                        <option key={key} value={key}>
+                                            {value}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">Género</label>
+                                <select
+                                    name="generoId"
+                                    value={formData.generoId}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                                >
+                                    {Object.entries(generos).map(([key, value]) => (
+                                        <option key={key} value={key}>
+                                            {value}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">Username</label>
+                                <input
+                                    type="text"
+                                    name="username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">Contraseña</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                                />
+                            </div>
+                            <div className="flex justify-end space-x-4">
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="bg-gray-400 hover:bg-gray-600 text-white py-1 px-3 rounded"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    onClick={handleSave}
+                                    className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded"
+                                >
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
