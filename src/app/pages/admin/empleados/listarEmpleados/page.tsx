@@ -31,8 +31,8 @@ const ListaEmpleados: React.FC = () => {
         nombre: "",
         apellido: "",
         identidad: "",
-        cargoId: "",
-        generoId: "",
+        cargo_Id: "",
+        genero_Id: "",
         username: "",
         password: "",
     });
@@ -82,8 +82,8 @@ const ListaEmpleados: React.FC = () => {
                 nombre: empleadoData.Nombre,
                 apellido: empleadoData.Apellido,
                 identidad: empleadoData.Identidad,
-                cargoId: empleadoData.Cargo_Id,
-                generoId: empleadoData.Genero_Id,
+                cargo_Id: empleadoData.Cargo_Id,
+                genero_Id: empleadoData.Genero_Id,
                 username: empleadoData.Username,
                 password: "",
             });
@@ -134,6 +134,11 @@ const ListaEmpleados: React.FC = () => {
                 if (response.ok) {
                     alert('Empleado actualizado con éxito');
                     setIsModalOpen(false);
+                    setEmpleados((prev) =>
+                        prev.map((emp) =>
+                            emp.Id === empleadoData.Id ? { ...emp, ...formData } : emp
+                        )
+                    );
                 } else {
                     alert('Error al actualizar el empleado');
                 }
@@ -249,14 +254,15 @@ const ListaEmpleados: React.FC = () => {
                             <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700">Cargo</label>
                                 <select
-                                    name="cargoId"
-                                    value={formData.cargoId}
+                                    name="cargo_Id"
+                                    value={formData.cargo_Id}
                                     onChange={handleChange}
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                                 >
-                                    {Object.entries(cargos).map(([key, value]) => (
-                                        <option key={key} value={key}>
-                                            {value}
+                                    <option value="">Seleccione un cargo</option>
+                                    {Object.entries(cargos).map(([id, descripcion]) => (
+                                        <option key={id} value={id}>
+                                            {descripcion}
                                         </option>
                                     ))}
                                 </select>
@@ -264,20 +270,21 @@ const ListaEmpleados: React.FC = () => {
                             <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700">Género</label>
                                 <select
-                                    name="generoId"
-                                    value={formData.generoId}
+                                    name="genero_Id"
+                                    value={formData.genero_Id}
                                     onChange={handleChange}
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                                 >
-                                    {Object.entries(generos).map(([key, value]) => (
-                                        <option key={key} value={key}>
-                                            {value}
+                                    <option value="">Seleccione un género</option>
+                                    {Object.entries(generos).map(([id, descripcion]) => (
+                                        <option key={id} value={id}>
+                                            {descripcion}
                                         </option>
                                     ))}
                                 </select>
                             </div>
                             <div className="mb-4">
-                                <label className="block text-sm font-medium text-gray-700">Username</label>
+                                <label className="block text-sm font-medium text-gray-700">Usuario</label>
                                 <input
                                     type="text"
                                     name="username"
@@ -299,13 +306,13 @@ const ListaEmpleados: React.FC = () => {
                             <div className="flex justify-end space-x-4">
                                 <button
                                     onClick={() => setIsModalOpen(false)}
-                                    className="bg-gray-400 hover:bg-gray-600 text-white py-1 px-3 rounded"
+                                    className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded"
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     onClick={handleSave}
-                                    className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded"
+                                    className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
                                 >
                                     Guardar
                                 </button>

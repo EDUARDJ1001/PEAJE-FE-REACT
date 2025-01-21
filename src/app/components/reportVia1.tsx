@@ -131,9 +131,9 @@ const ReportVia1: React.FC = () => {
 
             const options = {
                 filename: nombreArchivo,
-                margin: [10, 10, 10, 10],
+                margin: [5, 10, 10, 5],
                 html2canvas: { scale: 2 },
-                jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+                jsPDF: { unit: "mm", format: "legal", orientation: "portrait" },
             };
 
             if (content) {
@@ -142,8 +142,6 @@ const ReportVia1: React.FC = () => {
             }
         }
     };
-
-
 
     return (
         <div>
@@ -158,17 +156,19 @@ const ReportVia1: React.FC = () => {
                                 alt="Logo Municipalidad"
                                 className="h-14 w-14"
                             />
+                            <div className="flex flex-col items-center mx-4">
+                                <h2 className="text-xl font-bold">CIERRE DE BOLETERÍA</h2>
+                                <p className="text-lg mb-0">DEPARTAMENTO DE PEAJE</p>
+                                <p className="text-lg mt-0 mb-0">MUNICIPIO DE PUERTO CORTÉS</p>
+                                <p className="text-lg mt-0">Fecha: {new Date().toLocaleDateString()}</p>
+                            </div>
                             <img
                                 src="/img/PEAJE.png"
                                 alt="Logo peaje"
                                 className="h-14 w-16"
                             />
                         </div>
-                        <div className="mb-4 text-center">
-                            <h2 className="text-xl font-bold">CIERRE DE BOLETERÍA</h2>
-                            <p className="text-lg">DEPARTAMENTO DE PEAJE</p>
-                            <p className="text-lg">MUNICIPIO DE PUERTO CORTÉS</p>
-                            <p className="text-lg">Fecha: {new Date().toLocaleDateString()}</p>
+                        <div className="mb-2 text-center">
                             <div className="flex justify-between mt-2">
                                 <div>
                                     <p>Via #1</p>
@@ -216,24 +216,24 @@ const ReportVia1: React.FC = () => {
                             </div>
                         </div>
                         <div>
-                            <h2 className="text-lg font-bold mb-4">Conteo de Boletos</h2>
+                            <h2 className="text-lg font-bold mb-2">Conteo de Boletos</h2>
                             <table className="table-auto w-full border-collapse border border-gray-300">
                                 <thead className="bg-gray-100">
                                     <tr>
-                                        <th className="border border-gray-300 p-2">Tipo Boleto</th>
-                                        <th className="border border-gray-300 p-2">Valor Boleto</th>
-                                        <th className="border border-gray-300 p-2">Cantidad</th>
-                                        <th className="border border-gray-300 p-2">Total</th>
+                                        <th className="border border-gray-300 p-1">Tipo Boleto</th>
+                                        <th className="border border-gray-300 p-1">Valor Boleto</th>
+                                        <th className="border border-gray-300 p-1">Cantidad</th>
+                                        <th className="border border-gray-300 p-1">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {conteoBoletos.length > 0 ? (
                                         conteoBoletos.map((boleto, index) => (
                                             <tr key={index} className="even:bg-gray-50">
-                                                <td className="border border-gray-300 p-2">{boleto.Descripcion}</td>
-                                                <td className="border border-gray-300 p-2">{boleto.Valor}</td>
-                                                <td className="border border-gray-300 p-2">{boleto.Cantidad}</td>
-                                                <td className="border border-gray-300 p-2">{boleto.Total || '0.00'}</td>
+                                                <td className="border border-gray-300 p-1">{boleto.Descripcion}</td>
+                                                <td className="border border-gray-300 p-1">{boleto.Valor}</td>
+                                                <td className="border border-gray-300 p-1">{boleto.Cantidad}</td>
+                                                <td className="border border-gray-300 p-1">{boleto.Total || '0.00'}</td>
                                             </tr>
                                         ))
                                     ) : (
@@ -249,28 +249,28 @@ const ReportVia1: React.FC = () => {
                                         <td colSpan={3} className="border border-gray-300 p-2 font-bold text-right">
                                             Total en Boletos
                                         </td>
-                                        <td className="border border-gray-300 p-2 font-bold">
+                                        <td className="border border-gray-300 p-1 font-bold">
                                             {totalConteoBoletos.toFixed(2)}
                                         </td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
-                        <div>
-                            <h2 className="text-lg font-bold mb-4">Conteo de Billetes</h2>
+                        <div >
+                            <h2 className="text-lg font-bold mb-2">Conteo de Billetes</h2>
                             <table className="table-auto w-full border-collapse border border-gray-300">
                                 <thead className="bg-gray-100">
                                     <tr>
-                                        <th className="border border-gray-300 p-2">Denominación</th>
-                                        <th className="border border-gray-300 p-2">Cantidad</th>
-                                        <th className="border border-gray-300 p-2">Total</th>
+                                        <th className="border border-gray-300 p-1">Denominación</th>
+                                        <th className="border border-gray-300 p-1">Cantidad</th>
+                                        <th className="border border-gray-300 p-1">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {billetes.map((billete, index) => (
-                                        <tr key={index} className="even:bg-gray-50">
-                                            <td className="border border-gray-300 p-2">{billete.denominacion}</td>
-                                            <td className="border border-gray-300 p-2">
+                                        <tr key={index} className="even:bg-gray-50 p-0">
+                                            <td className="border border-gray-300 p-0">{billete.denominacion}</td>
+                                            <td className="border border-gray-300 p-0">
                                                 <input
                                                     type="number"
                                                     value={billete.cantidad}
@@ -280,7 +280,7 @@ const ReportVia1: React.FC = () => {
                                                     className="w-full p-2 border rounded-md"
                                                 />
                                             </td>
-                                            <td className="border border-gray-300 p-2">
+                                            <td className="border border-gray-300">
                                                 {(billete.valor * billete.cantidad).toFixed(2)}
                                             </td>
                                         </tr>
@@ -291,7 +291,7 @@ const ReportVia1: React.FC = () => {
                                         <td colSpan={2} className="border border-gray-300 p-2 font-bold text-right">
                                             Total en Billetes
                                         </td>
-                                        <td className="border border-gray-300 p-2 font-bold">
+                                        <td className="border border-gray-300 p-1 font-bold">
                                             {totalBilletes.toFixed(2)}
                                         </td>
                                     </tr>
@@ -313,7 +313,7 @@ const ReportVia1: React.FC = () => {
                                 </tfoot>
                             </table>
                         </div>
-                        <div className="mt-8">
+                        <div className="mt-16">
                             <div className="mt-8">
                                 <div className="flex justify-between mt-8">
                                     <div className="flex flex-col items-center">
@@ -326,7 +326,7 @@ const ReportVia1: React.FC = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex justify-between mt-8">
+                                <div className="flex justify-between mt-12">
                                     <div className="flex flex-col items-center">
                                         <hr className="border-t-4 border-gray-600 mt-2 w-48" />
                                         <p>Firma de Tesorero</p>
