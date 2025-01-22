@@ -45,6 +45,21 @@ const ReportVia1: React.FC = () => {
         cierre: "6:00 pm",
     });
 
+    const getTurno = () => {
+        if (!userData?.loginTime) return '';
+
+        const loginDate = new Date(userData.loginTime);
+        const hours = loginDate.getHours();
+
+        if (hours >= 6 && hours < 14) {
+            return 'Turno: A';
+        } else if (hours >= 14 && hours < 22) {
+            return 'Turno: B';
+        } else {
+            return 'Turno: C';
+        }
+    };
+
     const totalBilletes = billetes.reduce(
         (acc, billete) => acc + billete.valor * billete.cantidad,
         0
@@ -179,19 +194,7 @@ const ReportVia1: React.FC = () => {
                                     </p>
                                 </div>
                                 <div>
-                                    <label>Turno:</label>
-                                    <select
-                                        name="turno"
-                                        value={formData.turno}
-                                        onChange={handleFormChange}
-                                        className="ml-2 p-2 border rounded-md"
-                                    >
-                                        {["A", "B", "C"].map((turno) => (
-                                            <option key={turno} value={turno}>
-                                                {turno}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <p>{getTurno()}</p>
                                 </div>
                             </div>
                             <div className="flex justify-between mt-2">
