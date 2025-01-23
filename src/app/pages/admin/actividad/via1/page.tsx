@@ -71,7 +71,7 @@ const ActividadVia1: React.FC = () => {
             <div className="flex flex-1">
                 <SidebarAdmin/>
                 <div className="container mx-auto p-6">
-                    <h1 className="text-3xl font-bold text-gray-800 mb-4">Actividad de Via #2</h1>
+                    <h1 className="text-3xl font-bold text-gray-800 mb-4">Actividad de Via #1</h1>
                     <div className="p-6 space-y-8">
                         <div id="report-content">
                             <div className="flex justify-between items-center">
@@ -93,7 +93,7 @@ const ActividadVia1: React.FC = () => {
                                 <p className="text-lg">FECHA: {new Date().toLocaleDateString()}</p>
                                 <div className="flex justify-between mt-2">
                                     <div>
-                                        <p>VIA #2</p>
+                                        <p>VIA #1</p>
                                     </div>
                                     <div>
                                         <p>
