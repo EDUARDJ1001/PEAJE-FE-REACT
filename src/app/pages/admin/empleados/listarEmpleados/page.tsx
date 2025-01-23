@@ -187,18 +187,20 @@ const ListaEmpleados: React.FC = () => {
                                         <td className="px-4 py-2 text-black">{generos[empleado.Genero_Id] || "Desconocido"}</td>
                                         <td className="px-4 py-2 text-black">{empleado.Username}</td>
                                         <td className="px-4 py-2">
-                                            <button
-                                                onClick={() => handleEditar(empleado.Id)}
-                                                className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded"
-                                            >
-                                                Editar
-                                            </button>
-                                            <button
-                                                onClick={() => handleEliminar(empleado.Id)}
-                                                className="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded"
-                                            >
-                                                Eliminar
-                                            </button>
+                                            <div className="flex space-x-2">
+                                                <button
+                                                    onClick={() => handleEditar(empleado.Id)}
+                                                    className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded"
+                                                >
+                                                    Editar
+                                                </button>
+                                                <button
+                                                    onClick={() => handleEliminar(empleado.Id)}
+                                                    className="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded"
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
