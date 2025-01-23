@@ -10,6 +10,15 @@ interface User {
     loginTime: string;
 }
 
+interface Empleado {
+    id: number;
+    Nombre: string;
+    Apellido: string;
+    LoginTime: string;
+    isLoggedIn: boolean;
+    SelectedVia: number;
+}
+
 interface ConteoBoleto {
     Descripcion: string;
     Valor: number;
@@ -23,7 +32,7 @@ interface Billete {
     cantidad: number;
 }
 
-const ReportVia1: React.FC = () => {
+const ReportVia2: React.FC = () => {
     const [userData, setUserData] = useState<User | null>(null);
     const [conteoBoletos, setConteoBoletos] = useState<ConteoBoleto[]>([]);
     const [billetes, setBilletes] = useState<Billete[]>([
@@ -44,21 +53,6 @@ const ReportVia1: React.FC = () => {
         apertura: "6:00 am",
         cierre: "6:00 pm",
     });
-
-    const getTurno = () => {
-        if (!userData?.loginTime) return '';
-
-        const loginDate = new Date(userData.loginTime);
-        const hours = loginDate.getHours();
-
-        if (hours >= 6 && hours < 14) {
-            return 'Turno: A';
-        } else if (hours >= 14 && hours < 22) {
-            return 'Turno: B';
-        } else {
-            return 'Turno: C';
-        }
-    };
 
     const totalBilletes = billetes.reduce(
         (acc, billete) => acc + billete.valor * billete.cantidad,
@@ -93,14 +87,24 @@ const ReportVia1: React.FC = () => {
             .then((data) => setConteoBoletos(data))
             .catch((err) => console.error("Error al cargar conteo de boletos:", err));
 
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            const parsedUser = JSON.parse(storedUser);
-            setUserData({
-                ...parsedUser,
-                loginTime: new Date(parsedUser.loginTime).toLocaleString(),
-            });
-        }
+        fetch(`${apiHost}/api/empleados`)
+            .then((res) => res.json())
+            .then((data: Empleado[]) => {
+                const loggedUser = data.find(
+                    (empleado) => empleado.isLoggedIn && empleado.SelectedVia === 2
+                );
+
+                if (loggedUser) {
+                    setUserData({
+                        nombre: loggedUser.Nombre,
+                        apellido: loggedUser.Apellido,
+                        loginTime: new Date(loggedUser.LoginTime).toLocaleString(),
+                    });
+                } else {
+                    alert("No hay usuarios en la vía 2.");
+                }
+            })
+            .catch((err) => console.error("Error al cargar empleados:", err));
     }, [apiHost]);
 
     const limpiarConteoBoletos = async () => {
@@ -161,7 +165,7 @@ const ReportVia1: React.FC = () => {
 
 
     return (
-        <div>
+        <div className="bg-gray-100 min-h-screen flex flex-col">
             <HeaderAdmin />
             <div>
                 <h1 className="text-3xl font-bold text-gray-800 mb-4">Generación de Reporte Nuevo</h1>
@@ -188,7 +192,7 @@ const ReportVia1: React.FC = () => {
                         <div className="mb-4 text-center">
                             <div className="flex justify-between mt-2">
                                 <div>
-                                    <p>Via #1</p>
+                                    <p>Via #2</p>
                                 </div>
                                 <div>
                                     <p>
@@ -196,7 +200,11 @@ const ReportVia1: React.FC = () => {
                                     </p>
                                 </div>
                                 <div>
-                                    <p>{getTurno()}</p>
+                                    <select>
+                                        <option value="mañana">Turno A</option>
+                                        <option value="tarde">Turno B</option>
+                                        <option value="noche">Turno C</option>
+                                    </select>
                                 </div>
                             </div>
                             <div className="flex justify-between mt-2">
@@ -358,4 +366,4 @@ const ReportVia1: React.FC = () => {
     );
 };
 
-export default ReportVia1;
+export default ReportVia2;

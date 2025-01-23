@@ -10,6 +10,16 @@ interface User {
     loginTime: string;
 }
 
+interface Empleado {
+    id: number;
+    Nombre: string;
+    Apellido: string;
+    LoginTime: string;
+    isLoggedIn: boolean;
+    SelectedVia: number;
+}
+
+
 interface ConteoBoleto {
     Descripcion: string;
     Valor: number;
@@ -27,22 +37,33 @@ const ActividadVia1: React.FC = () => {
     const apiHost = process.env.NEXT_PUBLIC_API_HOST || "";
 
     useEffect(() => {
-        fetch(`${apiHost}/api/conteo-boletos`)
-            .then((res) => res.json())
-            .then((data) => {
-                setConteoBoletos(data);
-            })
-            .catch((err) => console.error("Error al cargar conteo de boletos:", err));
-
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            const parsedUser = JSON.parse(storedUser);
-            setUserData({
-                ...parsedUser,
-                loginTime: new Date(parsedUser.loginTime).toLocaleString(),
-            });
-        }
-    }, [apiHost]);
+            fetch(`${apiHost}/api/conteo-boletos`)
+                .then((res) => res.json())
+                .then((data) => {
+                    setConteoBoletos(data);
+                })
+                .catch((err) => console.error("Error al cargar conteo de boletos:", err));
+    
+            fetch(`${apiHost}/api/empleados`)
+                .then((res) => res.json())
+                .then((data: Empleado[]) => {
+                    const loggedUser = data.find(
+                        (empleado) => empleado.isLoggedIn && empleado.SelectedVia === 1
+                    );
+    
+                    if (loggedUser) {
+                        setUserData({
+                            nombre: loggedUser.Nombre,
+                            apellido: loggedUser.Apellido,
+                            loginTime: new Date(loggedUser.LoginTime).toLocaleString(),
+                        });
+                    } else {
+                        alert("No hay usuarios en la vía 1.");
+                    }
+                })
+                .catch((err) => console.error("Error al cargar empleados:", err));
+    
+        }, [apiHost]);
 
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col">
@@ -50,7 +71,7 @@ const ActividadVia1: React.FC = () => {
             <div className="flex flex-1">
                 <SidebarAdmin/>
                 <div className="container mx-auto p-6">
-                    <h1 className="text-3xl font-bold text-gray-800 mb-4">Actividad de Via #1</h1>
+                    <h1 className="text-3xl font-bold text-gray-800 mb-4">Actividad de Via #2</h1>
                     <div className="p-6 space-y-8">
                         <div id="report-content">
                             <div className="flex justify-between items-center">
@@ -66,13 +87,13 @@ const ActividadVia1: React.FC = () => {
                                 />
                             </div>
                             <div className="mb-4 text-center">
-                                <h2 className="text-xl font-bold">ACTIVIDAD VIA #1</h2>
+                                <h2 className="text-xl font-bold">ACTIVIDAD VIA #2</h2>
                                 <p className="text-lg">DEPARTAMENTO DE PEAJE</p>
                                 <p className="text-lg">MUNICIPIO DE PUERTO CORTÉS</p>
                                 <p className="text-lg">FECHA: {new Date().toLocaleDateString()}</p>
                                 <div className="flex justify-between mt-2">
                                     <div>
-                                        <p>VIA #1</p>
+                                        <p>VIA #2</p>
                                     </div>
                                     <div>
                                         <p>

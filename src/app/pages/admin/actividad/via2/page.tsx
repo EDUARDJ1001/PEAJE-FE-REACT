@@ -10,6 +10,16 @@ interface User {
     loginTime: string;
 }
 
+interface Empleado {
+    id: number;
+    Nombre: string;
+    Apellido: string;
+    LoginTime: string;
+    isLoggedIn: boolean;
+    SelectedVia: number;
+}
+
+
 interface ConteoBoleto {
     Descripcion: string;
     Valor: number;
@@ -27,22 +37,33 @@ const ActividadVia2: React.FC = () => {
     const apiHost = process.env.NEXT_PUBLIC_API_HOST || "";
 
     useEffect(() => {
-        fetch(`${apiHost}/api/conteo-boletos-v2`)
-            .then((res) => res.json())
-            .then((data) => {
-                setConteoBoletos(data);
-            })
-            .catch((err) => console.error("Error al cargar conteo de boletos:", err));
-
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            const parsedUser = JSON.parse(storedUser);
-            setUserData({
-                ...parsedUser,
-                loginTime: new Date(parsedUser.loginTime).toLocaleString(),
-            });
-        }
-    }, [apiHost]);
+            fetch(`${apiHost}/api/conteo-boletos-v2`)
+                .then((res) => res.json())
+                .then((data) => {
+                    setConteoBoletos(data);
+                })
+                .catch((err) => console.error("Error al cargar conteo de boletos:", err));
+    
+            fetch(`${apiHost}/api/empleados`)
+                .then((res) => res.json())
+                .then((data: Empleado[]) => {
+                    const loggedUser = data.find(
+                        (empleado) => empleado.isLoggedIn && empleado.SelectedVia === 2
+                    );
+    
+                    if (loggedUser) {
+                        setUserData({
+                            nombre: loggedUser.Nombre,
+                            apellido: loggedUser.Apellido,
+                            loginTime: new Date(loggedUser.LoginTime).toLocaleString(),
+                        });
+                    } else {
+                        alert("No hay usuarios en la vía 2.");
+                    }
+                })
+                .catch((err) => console.error("Error al cargar empleados:", err));
+    
+        }, [apiHost]);
 
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col">
