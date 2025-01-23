@@ -87,7 +87,7 @@ const ActividadVia1: React.FC = () => {
                                 />
                             </div>
                             <div className="mb-4 text-center">
-                                <h2 className="text-xl font-bold">ACTIVIDAD VIA #2</h2>
+                                <h2 className="text-xl font-bold">ACTIVIDAD VIA #1</h2>
                                 <p className="text-lg">DEPARTAMENTO DE PEAJE</p>
                                 <p className="text-lg">MUNICIPIO DE PUERTO CORTÉS</p>
                                 <p className="text-lg">FECHA: {new Date().toLocaleDateString()}</p>
