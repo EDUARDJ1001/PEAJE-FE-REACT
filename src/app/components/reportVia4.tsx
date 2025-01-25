@@ -118,11 +118,32 @@ const ReportVia4: React.FC = () => {
                 throw new Error("Error al limpiar la tabla Conteo_Boletos");
             }
 
-            console.log("Tabla Conteo_Boletos limpiada exitosamente.");
         } catch (error) {
             console.error("Error al limpiar la tabla Conteo_Boletos:", error);
         }
     };
+
+    const limpiarUsuario = async () => {
+        try {
+            const response = await fetch(`${apiHost}/api/auth/logoutVia4`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Error al limpiar usuario en sesión");
+            }
+    
+            window.location.href = "/pages/admin/reportes/selectVia"; 
+        } catch (error) {
+            console.error("Error al limpiar usuario en sesión:", error);
+            alert("Hubo un problema al cerrar sesión. Por favor, intenta de nuevo.");
+        }
+    };
+    
 
     const generatePDF = async () => {
         if (typeof window !== "undefined") {
@@ -158,11 +179,10 @@ const ReportVia4: React.FC = () => {
             if (content) {
                 await html2pdf().set(options).from(content).save();
                 await limpiarConteoBoletos();
+                await limpiarUsuario();
             }
         }
     };
-
-
 
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col">

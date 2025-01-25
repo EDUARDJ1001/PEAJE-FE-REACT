@@ -124,6 +124,27 @@ const ReportVia3: React.FC = () => {
         }
     };
 
+    const limpiarUsuario = async () => {
+        try {
+            const response = await fetch(`${apiHost}/api/auth/logoutVia3`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Error al limpiar usuario en sesión");
+            }
+    
+            window.location.href = "/pages/admin/reportes/selectVia"; 
+        } catch (error) {
+            console.error("Error al limpiar usuario en sesión:", error);
+            alert("Hubo un problema al cerrar sesión. Por favor, intenta de nuevo.");
+        }
+    };
+
     const generatePDF = async () => {
         if (typeof window !== "undefined") {
             const content = document.getElementById("report-content");
@@ -158,6 +179,7 @@ const ReportVia3: React.FC = () => {
             if (content) {
                 await html2pdf().set(options).from(content).save();
                 await limpiarConteoBoletos();
+                await limpiarUsuario();
             }
         }
     };
