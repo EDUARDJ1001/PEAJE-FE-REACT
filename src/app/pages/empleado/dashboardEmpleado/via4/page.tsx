@@ -139,42 +139,50 @@ const TicketsEmpleadosV4: React.FC = () => {
         const ticketNumber = ultimoId.toString().padStart(10, "0");
 
         const ticketContent = `
-      <html>
-      <head>
-          <title>Ticket</title>
-          <style>
-              body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 8px; }
-              .ticket { width: 100%; padding: 12px; margin-bottom: 10px; }
-              .ticket h1 { font-size: 10px; margin: 0; }
-              .ticket h2 { font-size: 6px; margin: 1px; }
-              .ticket p { font-size: 6px; margin: 1px 0; }
-              .qr-code { margin-top: 1px; }
-          </style>
-      </head>
-      <body>
-          <div class="ticket">
-              <h1>Municipalidad de Puerto Cortés</h1>
-              <h2>RTN 03019000044953</h2>
-              <p>Estación: PUERTO CORTÉS</p>
-              <p>Ticket No.V4${ticketNumber}</p>
-              <p>Operador: ${userData?.nombre}</p>
-              <p>Fecha: ${new Date().toLocaleString()}</p>
-              <p>Vehículo: ${boleto.Descripcion}</p>
-              <p>-------------------------</p>
-              <p>Total: L. ${Number(boleto.Valor).toFixed(2)}</p>
-              <p>Contribución por mejoras<p>
-          </div>
-      </body>
-      </html>
-      `;
+            <html>
+            <head>
+                <title>Ticket</title>
+                <style>
+                    body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 8px; }
+                    .ticket { width: 100%; padding: 12px; margin-bottom: 10px; }
+                    .ticket h1 { font-size: 10px; margin: 0; }
+                    .ticket h2 { font-size: 6px; margin: 1px; }
+                    .ticket p { font-size: 6px; margin: 1px 0; }
+                    .qr-code { margin-top: 1px; }
+                </style>
+            </head>
+            <body>
+                <div class="ticket">
+                    <h1>Municipalidad de Puerto Cortés</h1>
+                    <h2>RTN 03019000044953</h2>
+                    <p>Estación: PUERTO CORTÉS</p>
+                    <p>Ticket No.V1${ticketNumber}</p>
+                    <p>Operador: ${userData?.nombre}</p>
+                    <p>Fecha: ${new Date().toLocaleString()}</p>
+                    <p>Vehículo: ${boleto.Descripcion}</p>
+                    <p>-------------------------</p>
+                    <p>Total: L. ${Number(boleto.Valor).toFixed(2)}</p>
+                    <p>Contribución por mejoras<p>
+                </div>
+            </body>
+            </html>
+        `;
+
+        const confirmacion = window.confirm("¿Está seguro de que desea imprimir este ticket?");
+        if (!confirmacion) {
+            console.log("El usuario canceló la impresión. No se guardará el ticket.");
+            return;
+        }
 
         const printWindow = window.open("", "", "width=600,height=600");
         if (printWindow) {
             printWindow.document.write(ticketContent);
             printWindow.document.close();
             printWindow.print();
-            setTimeout(() => printWindow.close(), 10000);
-            actualizarConteoBoletos(boleto);
+
+            await actualizarConteoBoletos(boleto);
+
+            setTimeout(() => printWindow.close(), 5000);
         }
     };
 
