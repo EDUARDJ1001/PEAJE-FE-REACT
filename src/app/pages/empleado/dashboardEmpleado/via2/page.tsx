@@ -143,12 +143,34 @@ const TicketsEmpleadosV2: React.FC = () => {
             <head>
                 <title>Ticket</title>
                 <style>
-                    body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 8px; }
-                    .ticket { width: 100%; padding: 12px; margin-bottom: 10px; }
-                    .ticket h1 { font-size: 10px; margin: 0; }
-                    .ticket h2 { font-size: 6px; margin: 1px; }
-                    .ticket p { font-size: 6px; margin: 1px 0; }
-                    .qr-code { margin-top: 1px; }
+                    @media print {
+                        body { 
+                            font-family: Arial, sans-serif; 
+                            text-align: center; 
+                            margin: 12; 
+                            padding: 0; 
+                        }
+                        .ticket {
+                            width: 200mm;
+                            padding: 5px;
+                        }
+                        .ticket h1 {
+                            font-size: 22mm;
+                            margin: 2px 0;
+                        }
+                        .ticket h2 {
+                            font-size: 18mm;
+                            margin: 2px 0;
+                        }
+                        .ticket p {
+                            font-size: 16mm;
+                            margin: 2px 0;
+                        }
+                        .ticket .separador {
+                            border-top: 1px dashed black;
+                            margin: 5px 0;
+                        }
+                    }
                 </style>
             </head>
             <body>
@@ -156,13 +178,13 @@ const TicketsEmpleadosV2: React.FC = () => {
                     <h1>Municipalidad de Puerto Cortés</h1>
                     <h2>RTN 03019000044953</h2>
                     <p>Estación: PUERTO CORTÉS</p>
-                    <p>Ticket No.V1${ticketNumber}</p>
+                    <p><strong>Ticket No.V1${ticketNumber}</strong></p>
                     <p>Operador: ${userData?.nombre}</p>
                     <p>Fecha: ${new Date().toLocaleString()}</p>
                     <p>Vehículo: ${boleto.Descripcion}</p>
-                    <p>-------------------------</p>
-                    <p>Total: L. ${Number(boleto.Valor).toFixed(2)}</p>
-                    <p>Contribución por mejoras<p>
+                    <div class="separador"></div>
+                    <p><strong>Total: L. ${Number(boleto.Valor).toFixed(2)}</strong></p>
+                    <p>Contribución por mejoras</p>
                 </div>
             </body>
             </html>
@@ -182,7 +204,7 @@ const TicketsEmpleadosV2: React.FC = () => {
 
             await actualizarConteoBoletos(boleto);
 
-            setTimeout(() => printWindow.close(), 5000);
+            setTimeout(() => printWindow.close(), 4000);
         }
     };
 
