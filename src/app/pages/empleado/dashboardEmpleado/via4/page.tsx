@@ -180,7 +180,7 @@ const TicketsEmpleadosV4: React.FC = () => {
                     <h2>RTN 03019000044953</h2>
                     <p>Estación: PUERTO CORTÉS</p>
                     <p><strong>Ticket No.V1${ticketNumber}</strong></p>
-                    <p>Operador: ${userData?.id}</p>
+                    <p>Operador No.${userData?.id}</p>
                     <p>Fecha: ${new Date().toLocaleString()}</p>
                     <p>Vehículo: ${boleto.Descripcion}</p>
                     <div class="separador"></div>
