@@ -168,6 +168,7 @@ const ListaEmpleados: React.FC = () => {
                         <table className="table-auto w-full border-collapse border border-gray-200">
                             <thead className="bg-gray-800">
                                 <tr>
+                                    <th className="px-4 py-2 text-white">Id</th>
                                     <th className="px-4 py-2 text-white">Nombre</th>
                                     <th className="px-4 py-2 text-white">Apellido</th>
                                     <th className="px-4 py-2 text-white">Identidad</th>
@@ -180,6 +181,7 @@ const ListaEmpleados: React.FC = () => {
                             <tbody>
                                 {currentEmployees.map((empleado) => (
                                     <tr key={empleado.Id} className="hover:bg-gray-100">
+                                        <td className="px-4 py-2 text-black">{empleado.Id}</td>
                                         <td className="px-4 py-2 text-black">{empleado.Nombre}</td>
                                         <td className="px-4 py-2 text-black">{empleado.Apellido}</td>
                                         <td className="px-4 py-2 text-black">{empleado.Identidad}</td>

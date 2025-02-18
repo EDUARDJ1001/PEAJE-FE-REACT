@@ -4,6 +4,7 @@ import Header from "@/app/components/header";
 import React, { useEffect, useState } from "react";
 
 interface User {
+    id: number;
     nombre: string;
     apellido: string;
     loginTime: string;
@@ -179,7 +180,7 @@ const TicketsEmpleadosV2: React.FC = () => {
                     <h2>RTN 03019000044953</h2>
                     <p>Estación: PUERTO CORTÉS</p>
                     <p><strong>Ticket No.V1${ticketNumber}</strong></p>
-                    <p>Operador: ${userData?.nombre}</p>
+                    <p>Operador: ${userData?.id}</p>
                     <p>Fecha: ${new Date().toLocaleString()}</p>
                     <p>Vehículo: ${boleto.Descripcion}</p>
                     <div class="separador"></div>
