@@ -145,7 +145,8 @@ const TicketsEmpleadosV1: React.FC = () => {
             <title>Ticket</title>
             <style>
                 @page {
-                    margin: 0;
+                    size: auto; 
+                    margin: 0; 
                 }
                 @media print {
                     body { 
@@ -157,11 +158,13 @@ const TicketsEmpleadosV1: React.FC = () => {
                         justify-content: center;
                         align-items: flex-start;
                         height: auto;
+                        overflow: hidden;
                     }
                     .ticket {
                         width: 200mm;
                         padding: 1px;
-                        margin: auto;
+                        margin: 0 auto;
+                        display: block;
                     }
                     .ticket h1 {
                         font-size: 12mm;
@@ -194,7 +197,6 @@ const TicketsEmpleadosV1: React.FC = () => {
         </html>
         `;
 
-    
         const confirmacion = window.confirm("¿Está seguro de que desea imprimir este ticket?");
         if (!confirmacion) {
             console.log("El usuario canceló la impresión. No se guardará el ticket.");
