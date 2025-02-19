@@ -174,6 +174,10 @@ const TicketsEmpleadosV1: React.FC = () => {
                         font-size: 16mm;
                         margin: 2px 0;
                     }
+                    .ticket h4 {
+                        font-size: 12mm;
+                        margin: 2px 0;
+                    }
                     .ticket p {
                         font-size: 14mm;
                         margin: 2px 0;
@@ -185,10 +189,11 @@ const TicketsEmpleadosV1: React.FC = () => {
             <div class="ticket">
                 <h1>Municipalidad de Puerto Cortés</h1>
                 <h2>RTN 03019000044953</h2>
-                <p>Estación: PUERTO CORTÉS | Via #1</p>
+                <p>Estación: PUERTO CORTÉS</p>
+                <p>Via #1</p>
                 <p><strong>Ticket No.V1${ticketNumber}</strong></p>
                 <p>Operador No.${userData?.id}</p>
-                <p>Fecha: ${new Date().toLocaleString()}</p>
+                <h4>Fecha: ${new Date().toLocaleString()}</h4>
                 <p>Vehículo: ${boleto.Descripcion}</p>
                 <p><strong>Total: L. ${Number(boleto.Valor).toFixed(2)}</strong></p>
                 <p>Contribución por mejoras</p>
