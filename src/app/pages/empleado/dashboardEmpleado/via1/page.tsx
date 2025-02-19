@@ -176,10 +176,6 @@ const TicketsEmpleadosV1: React.FC = () => {
                             font-size: 12mm;
                             margin: 2px 0;
                         }
-                        .ticket .separador {
-                            border-top: 1px dashed black;
-                            margin: 5px 0;
-                        }
                     }
                 </style>
             </head>
