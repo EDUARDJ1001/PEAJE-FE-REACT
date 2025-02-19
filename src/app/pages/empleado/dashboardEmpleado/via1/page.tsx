@@ -156,15 +156,15 @@ const TicketsEmpleadosV1: React.FC = () => {
                             padding: 5px;
                         }
                         .ticket h1 {
-                            font-size: 22mm;
+                            font-size: 20mm;
                             margin: 2px 0;
                         }
                         .ticket h2 {
-                            font-size: 18mm;
+                            font-size: 16mm;
                             margin: 2px 0;
                         }
                         .ticket p {
-                            font-size: 16mm;
+                            font-size: 14mm;
                             margin: 2px 0;
                         }
                         .ticket .separador {
