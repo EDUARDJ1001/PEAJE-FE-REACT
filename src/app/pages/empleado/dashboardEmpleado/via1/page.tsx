@@ -152,8 +152,8 @@ const TicketsEmpleadosV1: React.FC = () => {
                             padding: 0; 
                         }
                         .ticket {
-                            width: 200mm;
-                            padding: 5px;
+                            width: 120mm;
+                            padding: 10px;
                         }
                         .ticket h1 {
                             font-size: 12mm;
