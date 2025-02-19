@@ -145,38 +145,36 @@ const TicketsEmpleadosV1: React.FC = () => {
                 <title>Ticket</title>
                 <style>
                     @media print {
+                        @page {
+                            size: auto;
+                            margin: 0;
+                        }
                         body { 
                             font-family: Arial, sans-serif; 
                             text-align: center; 
-                            margin: 5; 
+                            margin: 0;
                             padding: 0; 
                         }
                         .ticket {
                             width: 200mm;
-                            height: 210mm;
                             padding: 5px;
                         }
                         .ticket h1 {
-                            font-size: 20mm;
-                            margin: 2px 0;
-                        }
-                        .ticket h2 {
-                            font-size: 16mm;
-                            margin: 2px 0;
-                        }
-                        .ticket h3 {
-                            font-size: 11mm;
-                            margin: 2px 0;
+                            font-size: 20px;
+                            margin: 5px 0;
                         }
                         .ticket p {
-                            font-size: 14mm;
+                            font-size: 14px;
                             margin: 2px 0;
                         }
-                        .ticket .separador {
+                        .separador {
                             border-top: 1px dashed black;
-                            margin: 1px 0;
+                            margin: 5px 0;
                         }
-                            .cut {
+                        .cut {
+                            display: block;
+                            width: 100%;
+                            height: 1px;
                             page-break-after: always;
                         }
                     }
