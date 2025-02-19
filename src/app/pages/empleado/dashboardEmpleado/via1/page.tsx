@@ -146,13 +146,13 @@ const TicketsEmpleadosV1: React.FC = () => {
             <style>
                 @page {
                     size: auto; 
-                    margin: 0; 
+                    margin: 5; 
                 }
                 @media print {
                     body { 
                         font-family: Arial, sans-serif; 
                         text-align: center; 
-                        margin: 0; 
+                        margin: 5; 
                         padding: 0; 
                         display: flex;
                         justify-content: center;
@@ -167,15 +167,15 @@ const TicketsEmpleadosV1: React.FC = () => {
                         display: block;
                     }
                     .ticket h1 {
-                        font-size: 12mm;
+                        font-size: 14mm;
                         margin: 2px 0;
                     }
                     .ticket h2 {
-                        font-size: 16mm;
+                        font-size: 18mm;
                         margin: 2px 0;
                     }
                     .ticket p {
-                        font-size: 12mm;
+                        font-size: 14mm;
                         margin: 2px 0;
                     }
                 }
