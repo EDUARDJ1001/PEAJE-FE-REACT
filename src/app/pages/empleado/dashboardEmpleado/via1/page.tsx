@@ -171,7 +171,7 @@ const TicketsEmpleadosV1: React.FC = () => {
                         margin: 2px 0;
                     }
                     .ticket h2 {
-                        font-size: 18mm;
+                        font-size: 16mm;
                         margin: 2px 0;
                     }
                     .ticket p {
