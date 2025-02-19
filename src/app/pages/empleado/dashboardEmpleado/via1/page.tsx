@@ -144,6 +144,9 @@ const TicketsEmpleadosV1: React.FC = () => {
             <head>
                 <title>Ticket</title>
                 <style>
+                    @page {
+                        margin: 0;
+                    }
                     @media print {
                         body { 
                             font-family: Arial, sans-serif; 
