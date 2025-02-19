@@ -167,10 +167,6 @@ const TicketsEmpleadosV1: React.FC = () => {
                             font-size: 12mm;
                             margin: 2px 0;
                         }
-                        .ticket .separador {
-                            border-top: 1px dashed black;
-                            margin: 5px 0;
-                        }
                     }
                 </style>
             </head>
@@ -183,7 +179,6 @@ const TicketsEmpleadosV1: React.FC = () => {
                     <p>Operador No.${userData?.id}</p>
                     <p>Fecha: ${new Date().toLocaleString()}</p>
                     <p>Vehículo: ${boleto.Descripcion}</p>
-                    <div class="separador"></div>
                     <p><strong>Total: L. ${Number(boleto.Valor).toFixed(2)}</strong></p>
                     <p>Contribución por mejoras</p>
                 </div>
