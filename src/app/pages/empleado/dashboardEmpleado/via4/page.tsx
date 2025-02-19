@@ -148,7 +148,7 @@ const TicketsEmpleadosV4: React.FC = () => {
                         body { 
                             font-family: Arial, sans-serif; 
                             text-align: center; 
-                            margin: 12; 
+                            margin: 5; 
                             padding: 0; 
                         }
                         .ticket {
