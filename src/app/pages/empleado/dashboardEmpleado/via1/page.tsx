@@ -157,19 +157,19 @@ const TicketsEmpleadosV1: React.FC = () => {
                         }
                         .ticket h1 {
                             font-size: 16mm;
-                            margin: 2px 0;
+                            margin: 1px 0;
                         }
                         .ticket h2 {
                             font-size: 15mm;
-                            margin: 2px 0;
+                            margin: 1px 0;
                         }
                         .ticket h3 {
                             font-size: 11mm;
-                            margin: 2px 0;
+                            margin: 1px 0;
                         }
                         .ticket p {
                             font-size: 14mm;
-                            margin: 2px 0;
+                            margin: 1px 0;
                         }
                         .ticket .separador {
                             border-top: 1px dashed black;
@@ -190,7 +190,6 @@ const TicketsEmpleadosV1: React.FC = () => {
                     <div class="separador"></div>
                     <p><strong>Total: L. ${Number(boleto.Valor).toFixed(2)}</strong></p>
                     <p>Contribución por mejoras</p>
-                    <div class="cut"></div>
                 </div>
             </body>
             </html>
