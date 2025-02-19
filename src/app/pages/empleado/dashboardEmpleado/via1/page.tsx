@@ -148,18 +148,18 @@ const TicketsEmpleadosV1: React.FC = () => {
                         body { 
                             font-family: Arial, sans-serif; 
                             text-align: center; 
-                            margin: 0;
+                            margin: 5; 
                             padding: 0; 
                         }
                         .ticket {
-                            width: 200mm;
+                            width: 190mm;
                             padding: 5px;
                         }
                         .ticket h1 {
-                            font-size: 20px;
-                            margin: 5px 0;
+                            font-size: 20mm;
+                            margin: 2px 0;
                         }
-                            .ticket h2 {
+                        .ticket h2 {
                             font-size: 16mm;
                             margin: 2px 0;
                         }
@@ -168,17 +168,14 @@ const TicketsEmpleadosV1: React.FC = () => {
                             margin: 2px 0;
                         }
                         .ticket p {
-                            font-size: 14px;
+                            font-size: 14mm;
                             margin: 2px 0;
                         }
-                        .separador {
+                        .ticket .separador {
                             border-top: 1px dashed black;
-                            margin: 5px 0;
+                            margin: 1px 0;
                         }
-                        .cut {
-                            display: block;
-                            width: 100%;
-                            height: 1px;
+                            .cut {
                             page-break-after: always;
                         }
                     }
