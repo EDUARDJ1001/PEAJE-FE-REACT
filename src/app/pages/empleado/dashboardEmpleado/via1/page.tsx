@@ -153,7 +153,7 @@ const TicketsEmpleadosV1: React.FC = () => {
                         }
                         .ticket {
                             width: 200mm;
-                            height: auto;
+                            height: 210mm;
                             padding: 5px;
                         }
                         .ticket h1 {
