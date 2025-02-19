@@ -157,7 +157,6 @@ const TicketsEmpleadosV1: React.FC = () => {
                             .ticket {
                                 width: auto;
                                 max-width: 200mm;
-                                padding: 5px;
                             }
                             .ticket h1 {
                                 font-size: 20mm;
