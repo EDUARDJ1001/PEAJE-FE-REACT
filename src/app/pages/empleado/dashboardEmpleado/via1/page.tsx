@@ -141,54 +141,66 @@ const TicketsEmpleadosV1: React.FC = () => {
         
         const ticketContent = `
             <html>
-            <head>
-                <title>Ticket</title>
-                <style>
-                    @media print {
-                        body { 
-                            font-family: Arial, sans-serif; 
-                            text-align: center; 
-                            margin: 5; 
-                            padding: 0; 
+                <head>
+                    <title>Ticket</title>
+                    <style>
+                        @media print {
+                            * {
+                                margin: 0;
+                                padding: 0;
+                                box-sizing: border-box;
+                            }
+                            body { 
+                                font-family: Arial, sans-serif; 
+                                text-align: center; 
+                            }
+                            .ticket {
+                                width: auto;
+                                max-width: 80mm; /* Ajusta esto según la impresora */
+                                padding: 5px;
+                            }
+                            .ticket h1 {
+                                font-size: 20mm;
+                                margin: 2px 0;
+                            }
+                            .ticket h2 {
+                                font-size: 16mm;
+                                margin: 2px 0;
+                            }
+                            .ticket p {
+                                font-size: 14mm;
+                                margin: 2px 0;
+                            }
+                            .ticket .separador {
+                                border-top: 1px dashed black;
+                                margin: 5px 0;
+                            }
+                            /* Fuerza el corte del papel después del ticket */
+                            .ticket::after {
+                                content: "";
+                                display: block;
+                                width: 100%;
+                                height: 1px; /* Espacio mínimo */
+                                page-break-after: always;
+                            }
                         }
-                        .ticket {
-                            width: 200mm;
-                            padding: 5px;
-                        }
-                        .ticket h1 {
-                            font-size: 20mm;
-                            margin: 2px 0;
-                        }
-                        .ticket h2 {
-                            font-size: 16mm;
-                            margin: 2px 0;
-                        }
-                        .ticket p {
-                            font-size: 14mm;
-                            margin: 2px 0;
-                        }
-                        .ticket .separador {
-                            border-top: 1px dashed black;
-                            margin: 1px 0;
-                        }
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="ticket">
-                    <h1>Municipalidad de Puerto Cortés</h1>
-                    <h2>RTN 03019000044953</h2>
-                    <p>Estación: PUERTO CORTÉS</p>
-                    <p><strong>Ticket No.V1${ticketNumber}</strong></p>
-                    <p>Operador No.${userData?.id}</p>
-                    <p>Fecha: ${new Date().toLocaleString()}</p>
-                    <p>Vehículo: ${boleto.Descripcion}</p>
-                    <div class="separador"></div>
-                    <p><strong>Total: L. ${Number(boleto.Valor).toFixed(2)}</strong></p>
-                    <p>Contribución por mejoras</p>
-                </div>
-            </body>
-            </html>
+                    </style>
+                </head>
+                <body>
+                    <div class="ticket">
+                        <h1>Municipalidad de Puerto Cortés</h1>
+                        <h2>RTN 03019000044953</h2>
+                        <p>Estación: PUERTO CORTÉS</p>
+                        <p><strong>Ticket No.V1${ticketNumber}</strong></p>
+                        <p>Operador No.${userData?.id}</p>
+                        <p>Fecha: ${new Date().toLocaleString()}</p>
+                        <p>Vehículo: ${boleto.Descripcion}</p>
+                        <div class="separador"></div>
+                        <p><strong>Total: L. ${Number(boleto.Valor).toFixed(2)}</strong></p>
+                        <p>Contribución por mejoras</p>
+                    </div>
+                </body>
+                </html>
         `;
     
         const confirmacion = window.confirm("¿Está seguro de que desea imprimir este ticket?");
