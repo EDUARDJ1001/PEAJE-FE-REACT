@@ -145,18 +145,27 @@ const TicketsEmpleadosV1: React.FC = () => {
                 <title>Ticket</title>
                 <style>
                     @media print {
+                        @page {
+                            size: landscape; /* Fuerza la orientación horizontal */
+                            margin: 0; /* Elimina márgenes */
+                        }
                         body { 
                             font-family: Arial, sans-serif; 
-                            text-align: center; 
-                            margin: 5; 
+                            display: flex; 
+                            justify-content: center; 
+                            align-items: center; 
+                            height: 100vh;
+                            margin: 0; 
                             padding: 0; 
                         }
                         .ticket {
-                            width: 200mm;
-                            padding: 5px;
+                            width: 100%;
+                            max-width: 200mm; 
+                            padding: 10px;
+                            text-align: center;
                         }
                         .ticket h1 {
-                            font-size: 14mm;
+                            font-size: 12mm;
                             margin: 2px 0;
                         }
                         .ticket h2 {
@@ -189,7 +198,7 @@ const TicketsEmpleadosV1: React.FC = () => {
                 </div>
             </body>
             </html>
-        `;
+            `;
     
         const confirmacion = window.confirm("¿Está seguro de que desea imprimir este ticket?");
         if (!confirmacion) {
