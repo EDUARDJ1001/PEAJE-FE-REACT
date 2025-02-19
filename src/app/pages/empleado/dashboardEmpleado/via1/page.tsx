@@ -168,15 +168,12 @@ const TicketsEmpleadosV1: React.FC = () => {
                             margin: 2px 0;
                         }
                         .ticket p {
-                            font-size: 13mm;
+                            font-size: 14mm;
                             margin: 2px 0;
                         }
                         .ticket .separador {
                             border-top: 1px dashed black;
-                            margin: 0px 0;
-                        }
-                            .cut {
-                            page-break-after: always;
+                            margin: 5px 0;
                         }
                     }
                 </style>
