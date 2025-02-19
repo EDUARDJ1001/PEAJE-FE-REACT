@@ -152,7 +152,7 @@ const TicketsEmpleadosV1: React.FC = () => {
                             padding: 0; 
                         }
                         .ticket {
-                            width: 190mm;
+                            width: 200mm;
                             padding: 5px;
                         }
                         .ticket h1 {
@@ -205,7 +205,7 @@ const TicketsEmpleadosV1: React.FC = () => {
             return; 
         }
     
-        const printWindow = window.open("", "", "width=600,height=600");
+        const printWindow = window.open("", "", "width=600,height=auto");
         if (printWindow) {
             printWindow.document.write(ticketContent);
             printWindow.document.close();
