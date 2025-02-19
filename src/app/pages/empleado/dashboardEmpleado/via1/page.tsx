@@ -169,7 +169,7 @@ const TicketsEmpleadosV1: React.FC = () => {
                         }
                         .ticket .separador {
                             border-top: 1px dashed black;
-                            margin: 5px 0;
+                            margin: 1px 0;
                         }
                     }
                 </style>
