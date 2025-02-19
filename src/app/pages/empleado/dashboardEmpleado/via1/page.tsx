@@ -140,65 +140,56 @@ const TicketsEmpleadosV1: React.FC = () => {
         const ticketNumber = ultimoId.toString().padStart(10, "0");
         
         const ticketContent = `
-        <html>
-        <head>
-            <title>Ticket</title>
-            <style>
-                @media print {
-                    @page {
-                        margin: 0;
+            <html>
+            <head>
+                <title>Ticket</title>
+                <style>
+                    @media print {
+                        body { 
+                            font-family: Arial, sans-serif; 
+                            text-align: center; 
+                            margin: 5; 
+                            padding: 0; 
+                        }
+                        .ticket {
+                            width: 200mm;
+                            padding: 5px;
+                        }
+                        .ticket h1 {
+                            font-size: 12mm;
+                            margin: 2px 0;
+                        }
+                        .ticket h2 {
+                            font-size: 16mm;
+                            margin: 2px 0;
+                        }
+                        .ticket p {
+                            font-size: 12mm;
+                            margin: 2px 0;
+                        }
+                        .ticket .separador {
+                            border-top: 1px dashed black;
+                            margin: 5px 0;
+                        }
                     }
-                    body { 
-                        font-family: Arial, sans-serif; 
-                        display: flex; 
-                        justify-content: center; 
-                        align-items: center; 
-                        height: 100vh;
-                        margin: 0; 
-                        padding: 0; 
-                    }
-                    .ticket {
-                        width: 100%;
-                        max-width: 200mm; 
-                        padding: 10px;
-                        text-align: center;
-                    }
-                    .ticket h1 {
-                        font-size: 12mm;
-                        margin: 2px 0;
-                    }
-                    .ticket h2 {
-                        font-size: 16mm;
-                        margin: 2px 0;
-                    }
-                    .ticket p {
-                        font-size: 12mm;
-                        margin: 2px 0;
-                    }
-                    .ticket .separador {
-                        border-top: 1px dashed black;
-                        margin: 5px 0;
-                    }
-                }
-            </style>
-        </head>
-        <body>
-            <div class="ticket">
-                <h1>Municipalidad de Puerto Cortés</h1>
-                <h2>RTN 03019000044953</h2>
-                <p>Estación: PUERTO CORTÉS | Via #1</p>
-                <p><strong>Ticket No.V1${ticketNumber}</strong></p>
-                <p>Operador No.${userData?.id}</p>
-                <p>Fecha: ${new Date().toLocaleString()}</p>
-                <p>Vehículo: ${boleto.Descripcion}</p>
-                <div class="separador"></div>
-                <p><strong>Total: L. ${Number(boleto.Valor).toFixed(2)}</strong></p>
-                <p>Contribución por mejoras</p>
-            </div>
-        </body>
-        </html>
+                </style>
+            </head>
+            <body>
+                <div class="ticket">
+                    <h1>Municipalidad de Puerto Cortés</h1>
+                    <h2>RTN 03019000044953</h2>
+                    <p>Estación: PUERTO CORTÉS | Via #1</p>
+                    <p><strong>Ticket No.V1${ticketNumber}</strong></p>
+                    <p>Operador No.${userData?.id}</p>
+                    <p>Fecha: ${new Date().toLocaleString()}</p>
+                    <p>Vehículo: ${boleto.Descripcion}</p>
+                    <div class="separador"></div>
+                    <p><strong>Total: L. ${Number(boleto.Valor).toFixed(2)}</strong></p>
+                    <p>Contribución por mejoras</p>
+                </div>
+            </body>
+            </html>
         `;
-
     
         const confirmacion = window.confirm("¿Está seguro de que desea imprimir este ticket?");
         if (!confirmacion) {
